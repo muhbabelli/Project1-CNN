@@ -1,5 +1,4 @@
 from io import BytesIO
-
 import mnist_classifier as cl
 import numpy as np
 import requests
@@ -7,6 +6,8 @@ import torch
 import torch.nn.functional as F
 import torchvision
 from PIL import Image
+
+
 
 device = "cpu"
 

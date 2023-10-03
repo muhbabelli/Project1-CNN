@@ -11,6 +11,7 @@ model.eval() # Set the model to evaluation mode (important for models with dropo
 # Assuming you have a test dataset named 'test_data'
 test_loader = cl.test_data
 
+
 print("Starting test!")
 correct = 0
 total = 0
