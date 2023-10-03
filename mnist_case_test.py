@@ -7,9 +7,8 @@ import torch.nn.functional as F
 import torchvision
 from PIL import Image
 
+mydevice = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-
-device = "cpu"
 
 def inference(path, model, device):
     T = torchvision.transforms.Compose([
@@ -24,13 +23,14 @@ def inference(path, model, device):
         pred = model(torch.unsqueeze(T(x), axis=0).float().to(device))
         return F.softmax(pred, dim=-1).numpy()
 
-model = cl.NeuralNetwork()
-model.load_state_dict(torch.load("mnist_model.pt"))
-model.eval()
+
+mymodel = cl.NeuralNetwork()
+mymodel.load_state_dict(torch.load("mnist_model.pt"))
+mymodel.eval()
 
 with open("mnist_model.pt", 'rb') as f:
-    path = ("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaZZZF39S3WJQa-M3nxD0tbn-fiH3p51Nt4Q&usqp=CAU")
-    pred = inference(path, model, device='cpu')
+    mypath = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaZZZF39S3WJQa-M3nxD0tbn-fiH3p51Nt4Q&usqp=CAU"
+    pred = inference(mypath, mymodel, device='cpu')
     pred_idx = np.argmax(pred)
     print(f"Predicted: {pred_idx}, Prob: {pred[0][pred_idx] * 100} %")
 
@@ -47,8 +47,5 @@ with open("mnist_model.pt", 'rb') as f:
 # https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaZZZF39S3WJQa-M3nxD0tbn-fiH3p51Nt4Q&usqp=CAU
 
 
-
 # Cannot Identify:
 # https://www.researchgate.net/publication/287853768/figure/fig4/AS:667034937462784@1536044930113/Handwritten-digits-from-the-MNIST-data-set-5-For-practical-machine-learning-tasks.jpg
-
-

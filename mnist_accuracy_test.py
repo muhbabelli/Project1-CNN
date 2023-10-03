@@ -1,7 +1,7 @@
 import mnist_classifier as cl
 import torch
 
-device = "cpu"
+mydevice = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load the model
 model = cl.NeuralNetwork()
@@ -19,13 +19,13 @@ count = 1
 with torch.no_grad():
     for batch_test in test_loader:
         x, y = batch_test
-        x, y = x.to(device), y.to(device)
+        x, y = x.to(mydevice), y.to(mydevice)
         pred = model(x)
         total += pred.size(0)
         for i in range(pred.size(0)):
             if pred[i].argmax().item() == y[i].item():
                 correct += 1
-        print(f"Batch: {count} Done -> Accuracy: {correct/total:.4f}% ")
+        print(f"Batch: {count} Done -> Accuracy: {(correct/total)*100:.4f}% ")
         count += 1
 
 accuracy = 100 * correct / total
