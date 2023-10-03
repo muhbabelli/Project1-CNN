@@ -49,5 +49,3 @@ with open("mnist_model.pt", 'rb') as f:
 
 # Cannot Identify:
 # https://www.researchgate.net/publication/287853768/figure/fig4/AS:667034937462784@1536044930113/Handwritten-digits-from-the-MNIST-data-set-5-For-practical-machine-learning-tasks.jpg
-
-

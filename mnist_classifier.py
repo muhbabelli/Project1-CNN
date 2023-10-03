@@ -114,3 +114,4 @@ if __name__ == "__main__":
     # Save the model
     with open("mnist_model.pt", 'wb') as file:
         save(clf.state_dict(), file)
+

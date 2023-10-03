@@ -31,5 +31,3 @@ with torch.no_grad():
 accuracy = 100 * correct / total
 print("----------------")
 print(f"Test Accuracy: {accuracy:.4f}%")
-
-
