@@ -74,8 +74,12 @@ if __name__ == "__main__":
             print(f"epoch: {epoch + 1}, loss_tr: {loss_tr}")
             print(f"epoch: {epoch + 1}, accuracy: {accuracy} %")
 
-        tr_losslst_np = tr_losslst.detach().cpu().numpy()
-        accuracy_lst_np = accuracy_lst.detach().cpu().numpy()
+        if mydevice == "cpu":
+            tr_losslst_np = tr_losslst.detach().numpy()
+            accuracy_lst_np = accuracy_lst.detach().numpy()
+        else:
+            tr_losslst_np = tr_losslst.detach().cpu().numpy()
+            accuracy_lst_np = accuracy_lst.detach().cpu().numpy()
 
         plt.plot(range(num_epochs), tr_losslst_np, label="tr_loss")
         plt.ylabel("training loss")

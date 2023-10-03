@@ -5,8 +5,8 @@ mydevice = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load the model
 model = cl.NeuralNetwork()
-model.load_state_dict(torch.load("mnist_model.pt"))
-model.eval() # Set the model to evaluation mode (important for models with dropout or batch normalization)
+model.load_state_dict(torch.load("mnist_model.pt", map_location=torch.device(mydevice)))
+model.eval()  # Set the model to evaluation mode (important for models with dropout or batch normalization)
 
 # Assuming you have a test dataset named 'test_data'
 test_loader = cl.test_data

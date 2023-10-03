@@ -21,16 +21,19 @@ def inference(path, model, device):
         x = (255 - np.expand_dims(np.array(img), -1)) / 255.
     with torch.no_grad():
         pred = model(torch.unsqueeze(T(x), axis=0).float().to(device))
-        return F.softmax(pred, dim=-1).numpy()
+        if device == "cpu":
+            return F.softmax(pred, dim=-1).numpy()
+        else:
+            return F.softmax(pred, dim=-1).cpu().numpy()
 
 
 mymodel = cl.NeuralNetwork()
-mymodel.load_state_dict(torch.load("mnist_model.pt"))
+mymodel.load_state_dict(torch.load("mnist_model.pt", map_location=torch.device(mydevice)))
 mymodel.eval()
 
 with open("mnist_model.pt", 'rb') as f:
-    mypath = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaZZZF39S3WJQa-M3nxD0tbn-fiH3p51Nt4Q&usqp=CAU"
-    pred = inference(mypath, mymodel, device='cpu')
+    mypath = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfGtI01uzTRsnDhDCPF6d25HpGyal_JAJq4g&usqp=CAU"
+    pred = inference(mypath, mymodel, mydevice)
     pred_idx = np.argmax(pred)
     print(f"Predicted: {pred_idx}, Prob: {pred[0][pred_idx] * 100} %")
 
